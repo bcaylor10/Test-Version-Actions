@@ -33,3 +33,5 @@ jobs:
         run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
       - name: Update package.json version
         run: npm version ${{ steps.cz.outputs.version }} --no-git-tag-version
+        run: git add -A && git ci -m "Updated package.json to version ${{ steps.cz.outputs.version }}"
+        run: git push
