@@ -9,12 +9,25 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-    # - run: npm ci
-    # - run: npm run build --if-present
-    # - run: npm test
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      # - run: npm ci
+      # - run: npm run build --if-present
+      # - run: npm test
+  update-versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      - id: cz
+        name: Create bump and changelog
+        uses: commitizen-tools/commitizen-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print Version
+        run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
