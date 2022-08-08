@@ -31,3 +31,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print Version
         run: echo "Bumped to version ${{ steps.cz.outputs.version }}"
+      - name: Update package.json version
+        run: npm version ${{ steps.cz.outputs.version }} --no-git-tag-version
